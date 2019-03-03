@@ -1,0 +1,511 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+  <record id="studio_customization.odoo_studio_res_part_9d35d525-62c5-4c84-a71b-7c1928b3ca74" model="ir.ui.view" context="{'studio': True}">
+    <field name="active" eval="True"/>
+    <field name="arch" type="xml">
+      <data>
+        <xpath expr="//field[@name='vat']" position="attributes">
+          <attribute name="string">TIN No.</attribute>
+        </xpath>
+        <xpath expr="//field[@name='vat']" position="after">
+          <field name="x_studio_tax_treatment" string="Tax Treatment"/>
+          <field name="x_studio_domestic_rcm" string="Domestic RCM"/>
+          <field name="x_studio_place_of_supply_1" string="Place Of Supply"/>
+          <field name="x_studio_source_of_supply_1" string="Source Of Supply"/>
+        </xpath>
+        <xpath expr="//field[@name='property_payment_term_id']" position="after">
+          <field name="x_studio_place_of_supply" string="Place of Supply"/>
+        </xpath>
+        <xpath expr="//field[@name='property_supplier_payment_term_id']" position="after">
+          <field name="x_studio_source_of_supply" string="Source of Supply"/>
+        </xpath>
+      </data>
+    </field>
+    <field name="field_parent" eval="False"/>
+    <field name="groups_id" eval="[(6, 0, [])]"/>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="key" eval="False"/>
+    <field name="mode">extension</field>
+    <field name="model">res.partner</field>
+    <field name="name">Odoo Studio: res.partner.form customization</field>
+    <field name="priority">99</field>
+    <field name="type">form</field>
+  </record>
+  <record id="studio_customization.odoo_studio_account__49b55cbe-c3d0-4f21-a173-5aa0a11abad9" model="ir.ui.view" context="{'studio': True}">
+    <field name="active" eval="True"/>
+    <field name="arch" type="xml">
+      <data>
+        <xpath expr="//field[@name='vendor_bill_id']" position="after">
+          <field name="x_studio_tax_treatment" string="Tax Treatment" attrs="{}" readonly="1"/>
+          <field name="x_studio_place_of_supply"/>
+          <field name="x_studio_apply_reverse_charge" string="Apply Reverse Charge"/>
+          <field name="x_studio_source_of_supply" string="Source of Supply"/>
+        </xpath>
+        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='invoice_line_ids']/tree[1]/field[@name='price_unit']" position="after">
+          <field name="x_studio_input_tax_credit"/>
+          <field name="x_studio_percentage" string="Percentage"/>
+        </xpath>
+        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='invoice_line_ids']/tree[1]/field[@name='discount']" position="after">
+          <field name="x_studio_not_eligible_for_itc" attrs="{}" invisible="1"/>
+        </xpath>
+        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='invoice_line_ids']/tree[1]" position="after">
+          <form>
+            <field name="display_type" invisible="1"/>
+            <!--
+                        We need the sequence field to be here for new lines to be added at the correct position.
+                        TODO: at some point we want to fix this in the framework so that an invisible field is not required.
+                    -->
+            <field name="sequence" invisible="1"/>
+            <group attrs="{'invisible': [('display_type', '!=', False)]}" name="studio_group_425050">
+              <group name="studio_group_58d28d">
+                <field name="partner_id" invisible="1"/>
+                <field name="invoice_type" invisible="1"/>
+                <field name="company_id" invisible="1"/>
+                <field name="product_id" context="{'partner_id': partner_id}"/>
+                <label for="quantity"/>
+                <div name="studio_div_1c7e65">
+                  <field name="quantity" class="oe_inline"/>
+                  <field name="uom_id" class="oe_inline" groups="uom.group_uom"/>
+                </div>
+                <field name="price_unit"/>
+                <field name="x_studio_input_tax_credit" string="Input Tax Credit" widget="label_selection"/>
+                <field name="x_studio_fiscal_position" string="Fiscal Position"/>
+                <field name="discount" groups="base.group_no_one"/>
+                <field name="x_studio_not_eligible_for_itc" string="Not Eligible for ITC" attrs="{}" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
+              </group>
+              <group name="studio_group_569b50">
+                <field name="analytic_tag_ids" groups="analytic.group_analytic_accounting" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                <field domain="[('company_id', '=', company_id)]" name="account_id" groups="account.group_account_user"/>
+                <field name="invoice_line_tax_ids" context="{'type': invoice_type}" domain="[('type_tax_use','!=','none'),('company_id', '=', company_id)]" widget="many2many_tags" options="{'no_create': True}"/>
+                <field domain="[('company_id', '=', company_id)]" name="account_analytic_id" groups="analytic.group_analytic_accounting"/>
+                <field name="analytic_tag_ids" widget="many2many_tags" groups="analytic.group_analytic_tags"/>
+                <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+              </group>
+            </group>
+            <label for="name" string="Description" attrs="{'invisible': [('display_type', '!=', False)]}"/>
+            <label for="name" string="Section" attrs="{'invisible': [('display_type', '!=', 'line_section')]}"/>
+            <label for="name" string="Note" attrs="{'invisible': [('display_type', '!=', 'line_note')]}"/>
+            <field name="name"/>
+          </form>
+        </xpath>
+      </data>
+    </field>
+    <field name="field_parent" eval="False"/>
+    <field name="groups_id" eval="[(6, 0, [])]"/>
+    <field name="inherit_id" ref="account.invoice_supplier_form"/>
+    <field name="key" eval="False"/>
+    <field name="mode">extension</field>
+    <field name="model">account.invoice</field>
+    <field name="name">Odoo Studio: account.invoice.supplier.form customization</field>
+    <field name="priority">99</field>
+    <field name="type">form</field>
+  </record>
+  <record id="studio_customization.odoo_studio_account__a82c4870-994d-4add-9f9c-e688296bb6a7" model="ir.ui.view" context="{'studio': True}">
+    <field name="active" eval="True"/>
+    <field name="arch" type="xml">
+      <data>
+        <xpath expr="//field[@name='payment_term_id']" position="after">
+          <field name="x_studio_field_rhGAH"/>
+          <field name="x_studio_supply_place" string="Supply Place" attrs="{}" readonly="1"/>
+          <field name="x_studio_source" string="Source" attrs="{}" invisible="1"/>
+        </xpath>
+        <xpath expr="//field[@name='user_id']" position="after">
+          <field name="x_studio_field_R3g7t" attrs="{}" readonly="1" string="VAT No."/>
+        </xpath>
+        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='invoice_line_ids']/tree[1]/field[@name='name']" position="after">
+          <field name="x_studio_date_of_supply"/>
+        </xpath>
+        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='invoice_line_ids']/tree[1]/field[@name='price_unit']" position="attributes">
+          <attribute name="string">Unit Price</attribute>
+        </xpath>
+        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='invoice_line_ids']/tree[1]/field[@name='price_unit']" position="after">
+          <field name="x_studio_price"/>
+        </xpath>
+        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='invoice_line_ids']/tree[1]/field[@name='discount']" position="after">
+          <field name="x_studio_discount_amount" string="Discount Amount"/>
+          <field name="x_studio_net_price" string="Net Price"/>
+        </xpath>
+        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='invoice_line_ids']/tree[1]/field[@name='invoice_line_tax_ids']" position="after">
+          <field name="price_tax"/>
+        </xpath>
+        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='invoice_line_ids']/kanban[1]" position="after">
+          <form>
+            <field name="display_type" invisible="1"/>
+            <!--
+                        We need the sequence field to be here for new lines to be added at the correct position.
+                        TODO: at some point we want to fix this in the framework so that an invisible field is not required.
+                    -->
+            <field name="sequence" invisible="1"/>
+            <group attrs="{'invisible': [('display_type', '!=', False)]}" name="studio_group_b96ed4">
+              <group name="studio_group_000d9b">
+                <field name="partner_id" invisible="1"/>
+                <field name="invoice_type" invisible="1"/>
+                <field name="company_id" invisible="1"/>
+                <field name="product_id" context="{'partner_id': partner_id}"/>
+                <field name="x_studio_date_of_supply" string="Date of supply"/>
+                <label for="quantity"/>
+                <div name="studio_div_98339a">
+                  <field name="quantity" class="oe_inline"/>
+                  <field name="uom_id" class="oe_inline" groups="uom.group_uom"/>
+                </div>
+                <field name="price_unit"/>
+                <field name="x_studio_price" string="T Price"/>
+                <field name="price_tax"/>
+                <field name="discount" groups="base.group_no_one"/>
+                <field name="currency_id" invisible="1"/>
+              </group>
+              <group name="studio_group_417444">
+                <field name="analytic_tag_ids" groups="analytic.group_analytic_accounting" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                <field domain="[('company_id', '=', company_id)]" name="account_id" groups="account.group_account_user"/>
+                <field name="invoice_line_tax_ids" context="{'type': invoice_type}" domain="[('type_tax_use','!=','none'),('company_id', '=', company_id)]" widget="many2many_tags" options="{'no_create': True}"/>
+                <field domain="[('company_id', '=', company_id)]" name="account_analytic_id" groups="analytic.group_analytic_accounting"/>
+                <field name="analytic_tag_ids" widget="many2many_tags" groups="analytic.group_analytic_tags"/>
+                <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+              </group>
+            </group>
+            <label for="name" string="Description" attrs="{'invisible': [('display_type', '!=', False)]}"/>
+            <label for="name" string="Section" attrs="{'invisible': [('display_type', '!=', 'line_section')]}"/>
+            <label for="name" string="Note" attrs="{'invisible': [('display_type', '!=', 'line_note')]}"/>
+            <field name="name"/>
+          </form>
+        </xpath>
+        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='other_info']/field[@name='tax_line_ids']/tree[1]/field[@name='account_id']" position="after">
+          <field name="x_studio_currency"/>
+          <field name="x_studio_exchange_rate"/>
+          <field name="base"/>
+          <field name="x_studio_taxable_amount_bhd" string="Taxable Amount BHD"/>
+        </xpath>
+        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='other_info']/field[@name='tax_line_ids']/tree[1]/field[@name='amount_total']" position="after">
+          <field name="x_studio_tax_amount_bhd" string="Tax Amount BHD"/>
+        </xpath>
+        <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='other_info']/field[@name='tax_line_ids']/tree[1]" position="after">
+          <form string="Manual Invoice Taxes">
+            <group col="4" name="studio_group_18d036">
+              <field name="name"/>
+              <field name="sequence"/>
+              <field name="account_id" groups="account.group_account_user"/>
+              <field name="account_analytic_id" domain="[('company_id', '=', parent.company_id)]" groups="analytic.group_analytic_accounting"/>
+              <field name="manual"/>
+              <field name="amount_total" string="Amount"/>
+              <field name="base"/>
+              <field name="x_studio_exchange_rate" string="Exchange Rate"/>
+              <field name="x_studio_taxable_amount_bhd"/>
+              <field name="x_studio_currency" string="Currency"/>
+              <field name="currency_id" invisible="1"/>
+            </group>
+          </form>
+        </xpath>
+      </data>
+    </field>
+    <field name="field_parent" eval="False"/>
+    <field name="groups_id" eval="[(6, 0, [])]"/>
+    <field name="inherit_id" ref="account.invoice_form"/>
+    <field name="key" eval="False"/>
+    <field name="mode">extension</field>
+    <field name="model">account.invoice</field>
+    <field name="name">Odoo Studio: account.invoice.form customization</field>
+    <field name="priority">99</field>
+    <field name="type">form</field>
+  </record>
+  <record id="studio_customization.odoo_studio_report_i_ffcb7e5a-368b-4a31-ac9e-a12bc6be47f2" model="ir.ui.view" context="{'studio': True}">
+    <field name="active" eval="True"/>
+    <field name="arch" type="xml">
+      <data>
+        <xpath expr="/t/t/div/div[2]" position="after">
+          <table class="table o_report_block_table">
+            <thead>
+              <tr>
+                <th>
+                  <span>Name</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr t-foreach="o.tax_line_ids" t-as="table_line">
+                <td>
+                  <span t-field="table_line.display_name"/>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </xpath>
+        <xpath expr="/t/t/div/table[2]/thead/tr/th" position="after">
+          <th>
+            <span>Taxable Amount BHD</span>
+          </th>
+        </xpath>
+        <xpath expr="/t/t/div/table[2]/tbody/tr/td" position="after">
+          <td>
+            <span t-field="table_line.x_studio_taxable_amount_bhd"/>
+          </td>
+        </xpath>
+        <xpath expr="/t/t/div/table[2]/thead/tr/th[2]" position="after">
+          <th>
+            <span>Tax Amount BHD</span>
+          </th>
+        </xpath>
+        <xpath expr="/t/t/div/table[2]/tbody/tr/td[2]" position="after">
+          <td>
+            <span t-field="table_line.x_studio_tax_amount_bhd"/>
+          </td>
+        </xpath>
+        <xpath expr="/t/t/div/table[2]/thead/tr/th[1]" position="after">
+          <th>
+            <span>Tax Description</span>
+          </th>
+        </xpath>
+        <xpath expr="/t/t/div/table[2]/tbody/tr/td[1]" position="after">
+          <td>
+            <span t-field="table_line.name"/>
+          </td>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead/tr/th[2]" position="after">
+          <th>
+            <span>Date of supply</span>
+          </th>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/tbody/t[2]/tr/t[1]/td[2]" position="after">
+          <td>
+            <span t-field="line.x_studio_date_of_supply"/>
+          </td>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead/tr/th[4]/span" position="replace">
+          <span>
+            <p>Qty    </p>
+          </span>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead/tr/th[5]" position="after">
+          <th>
+            <span>Price</span>
+          </th>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/tbody/t[2]/tr/t[1]/td[5]" position="after">
+          <td>
+            <span t-field="line.x_studio_price"/>
+          </td>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead/tr/th[6]" position="after">
+          <th>
+            <span>Discount (%)</span>
+          </th>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/tbody/t[2]/tr/t[1]/td[6]" position="after">
+          <td>
+            <span t-field="line.discount"/>
+          </td>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead/tr/th[7]" position="after">
+          <th>
+            <span>Net Price</span>
+          </th>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/tbody/t[2]/tr/t[1]/td[7]" position="after">
+          <td>
+            <span t-field="line.x_studio_net_price"/>
+          </td>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead/tr/th[10]" position="after">
+          <th>
+            <span>Tax Amount</span>
+          </th>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/tbody/t[2]/tr/t[1]/td[10]" position="after">
+          <td>
+            <span t-field="line.price_tax"/>
+          </td>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead/tr/th[1]/span" position="attributes">
+          <attribute name="style" separator=";" add="margin-top:3px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead/tr/th[1]/span" position="attributes">
+          <attribute name="style" separator=";" add="margin-top:8px" remove="margin-top:3px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead/tr/th[1]/span" position="attributes">
+          <attribute name="style" separator=";" add="margin-top:2px" remove="margin-top:8px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead/tr/th[1]/span" position="attributes">
+          <attribute name="style" separator=";" add="margin-bottom:8px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead/tr/th[1]/span" position="attributes">
+          <attribute name="style" separator=";" remove="margin-bottom:8px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead/tr/th[7]/span" position="replace">
+          <span>Disc.(%)</span>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead/tr/th[10]/span" position="attributes">
+          <attribute name="style" separator=";" add="width:20px;display:inline-block"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead/tr/th[10]/span" position="attributes">
+          <attribute name="style" separator=";" add="width:40px" remove="width:20px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead/tr/th[10]/span" position="attributes">
+          <attribute name="style" separator=";" add="width:50px" remove="width:40px"/>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/table[2]/thead[1]/tr[1]/th[1]" position="replace"/>
+        <xpath expr="/t[1]/t[1]/div[1]/table[2]/tbody[1]/tr[1]/td[1]" position="replace"/>
+        <xpath expr="/t[1]/t[1]/div[1]/table[2]/tbody[1]/tr[1]/td[3]/span[1]" position="attributes">
+          <attribute name="t-options-widget">"float"</attribute>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/table[2]/tbody[1]/tr[1]/td[3]/span[1]" position="attributes">
+          <attribute name="t-options-precision">3</attribute>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/table[2]/tbody[1]/tr[1]/td[2]/span[1]" position="attributes">
+          <attribute name="t-options-widget">"float"</attribute>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/table[2]/tbody[1]/tr[1]/td[2]/span[1]" position="attributes">
+          <attribute name="t-options-precision">3</attribute>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead/tr/th[1]/span" position="attributes">
+          <attribute name="class" separator=" " add="h1"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead/tr/th[1]/span" position="attributes">
+          <attribute name="class" separator=" " add="small" remove="h1"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead/tr/th[1]/span" position="attributes">
+          <attribute name="class" separator=" " remove="small"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="class" separator=" " add="h2"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="class" separator=" " add="h3" remove="h2"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="class" separator=" " add="h4" remove="h3"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="class" separator=" " add="h5" remove="h4"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="class" separator=" " add="h6" remove="h5"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="class" separator=" " remove="h6"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";" add="background-color:#9C9C94"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";" remove="background-color:#9C9C94"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";" add="margin-top:0px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";" add="margin-right:0px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";" add="margin-bottom:0px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";" add="margin-left:0px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";" add="margin-left:1px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";" add="margin-left:5px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";" add="margin-top:5px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";" add="margin-top:15px" remove="margin-top:5px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";" remove="margin-top:15px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="class" separator=" " add="h4"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="class" separator=" " remove="h4"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";" add="margin-top:25px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";" remove="margin-top:25px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";" add="margin-top:25px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";" add="margin-right:25px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";" add="margin-bottom:25px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";" add="margin-left:25px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";" remove="margin-left:25px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";" remove="margin-bottom:25px"/>
+        </xpath>
+        <xpath expr="/t/t/div/table[1]/thead" position="attributes">
+          <attribute name="style" separator=";" remove="margin-right:25px"/>
+        </xpath>
+      </data>
+    </field>
+    <field name="field_parent" eval="False"/>
+    <field name="groups_id" eval="[(6, 0, [])]"/>
+    <field name="inherit_id" ref="account.report_invoice_document_with_payments"/>
+    <field name="key">gen_key.441e61</field>
+    <field name="mode">extension</field>
+    <field name="model" eval="False"/>
+    <field name="name">Odoo Studio: report_invoice_document_with_payments customization</field>
+    <field name="priority">99</field>
+    <field name="type">qweb</field>
+  </record>
+  <record id="studio_customization.odoo_studio_account__18e93030-ddc0-4d88-8614-5383020ca73c" model="ir.ui.view" context="{'studio': True}">
+    <field name="active" eval="True"/>
+    <field name="arch" type="xml">
+      <data>
+        <xpath expr="//field[@name='sequence']" position="before">
+          <field name="id"/>
+        </xpath>
+      </data>
+    </field>
+    <field name="field_parent" eval="False"/>
+    <field name="groups_id" eval="[(6, 0, [])]"/>
+    <field name="inherit_id" ref="account.view_account_position_tree"/>
+    <field name="key" eval="False"/>
+    <field name="mode">extension</field>
+    <field name="model">account.fiscal.position</field>
+    <field name="name">Odoo Studio: account.fiscal.position.tree customization</field>
+    <field name="priority">99</field>
+    <field name="type">tree</field>
+  </record>
+  <record id="studio_customization.odoo_studio_account__6d906a7e-7ae7-492c-b0f6-d277ffa3e572" model="ir.ui.view" context="{'studio': True}">
+    <field name="active" eval="True"/>
+    <field name="arch" type="xml">
+      <data>
+        <xpath expr="//field[@name='sequence']" position="before">
+          <field name="id"/>
+        </xpath>
+      </data>
+    </field>
+    <field name="field_parent" eval="False"/>
+    <field name="groups_id" eval="[(6, 0, [])]"/>
+    <field name="inherit_id" ref="account.view_tax_tree"/>
+    <field name="key" eval="False"/>
+    <field name="mode">extension</field>
+    <field name="model">account.tax</field>
+    <field name="name">Odoo Studio: account.tax.tree customization</field>
+    <field name="priority">99</field>
+    <field name="type">tree</field>
+  </record>
+</odoo>
