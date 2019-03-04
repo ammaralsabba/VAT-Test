@@ -1,0 +1,50 @@
+The following relational data haven't been exported because they either refer
+to a model that Studio doesn't export, or have no XML id:
+
+Record: studio_customization.update_fiscal_positi_478fe6cf-82f6-4239-9b3c-fa8c21cc25ca
+Model: ir.actions.server
+Field: fields_lines
+Type: one2many
+Value: ir.server.object.lines(319,) ('ir.server.object.lines,319')
+
+Record: studio_customization.other_than_gcc_state_e59d5584-5331-4437-8f6d-e7db8e7a2def
+Model: ir.actions.server
+Field: fields_lines
+Type: one2many
+Value: ir.server.object.lines(321,) ('ir.server.object.lines,321')
+
+Record: studio_customization.gcc_vat_registered_1e2530ee-523c-419a-ba04-8ae11abcf771
+Model: ir.actions.server
+Field: fields_lines
+Type: one2many
+Value: ir.server.object.lines(323,) ('ir.server.object.lines,323')
+
+Record: studio_customization.tax_to_non_bahraini_54d2ce3e-1eca-43ea-bc53-927790521680
+Model: ir.actions.server
+Field: fields_lines
+Type: one2many
+Value: ir.server.object.lines(325,) ('ir.server.object.lines,325')
+
+Record: studio_customization.tst_4906639e-429f-45ba-a820-4a6e920b01d7
+Model: ir.actions.server
+Field: fields_lines
+Type: one2many
+Value: ir.server.object.lines(330,) ('ir.server.object.lines,330')
+
+Record: studio_customization.import_rcm_ea935fc7-88ea-4d24-84e7-e87a7993ffdb
+Model: ir.actions.server
+Field: fields_lines
+Type: one2many
+Value: ir.server.object.lines(333,) ('ir.server.object.lines,333')
+
+Record: studio_customization.exports_8088dede-d232-4596-87df-65060f535cfc
+Model: ir.actions.server
+Field: fields_lines
+Type: one2many
+Value: ir.server.object.lines(335,) ('ir.server.object.lines,335')
+
+Record: studio_customization.domestic_rcm_35e5feae-b757-47b6-a690-babd41ed6c3e
+Model: ir.actions.server
+Field: fields_lines
+Type: one2many
+Value: ir.server.object.lines(337,) ('ir.server.object.lines,337')
